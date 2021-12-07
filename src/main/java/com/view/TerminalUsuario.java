@@ -78,8 +78,22 @@ public class TerminalUsuario {
 		return arrayInputs;
 	}
 
-	public void imprimirTabela() {
-
+	public void imprimirTabela(String[] titulos, List<String[]> lista) {
+		this.imprimirLinha();
+		for (int i = 0; i < titulos.length; i++) {
+			System.out.printf("%-30s\t", titulos[i]);
+		}
+		System.out.println();
+		this.imprimirLinha();
+		this.imprimirLinha();
+		for (String[] strings : lista) {
+			for (int i = 0; i < strings.length; i++) {
+				System.out.printf("%-30s\t", strings[i]);
+			}
+			System.out.println();
+			this.imprimirLinha();
+		}
+		this.imprimirLinha();
 	}
 
 	public void exibirMensagemErro(Exception exc) {

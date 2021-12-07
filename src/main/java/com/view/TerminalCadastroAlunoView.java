@@ -10,6 +10,9 @@ import java.util.regex.Pattern;
 
 import main.java.com.controller.AlunoController;
 import main.java.com.exceptions.SistemaEscolarException;
+import main.java.com.util.ValidadorDataNascimento;
+import main.java.com.util.ValidadorMatricula;
+import main.java.com.util.ValidadorNome;
 
 public class TerminalCadastroAlunoView {
 	
@@ -23,40 +26,9 @@ public class TerminalCadastroAlunoView {
 	public void salvarAluno() {
 		TerminalUsuario tu = new TerminalUsuario();
 		List<InputUsuario> list = new ArrayList<>();
-		list.add(new InputUsuarioNumeroInterio("Digite a matricula do aluno: ", new ValidadorInteiro() {
-			@Override
-			public boolean test(Integer num) {
-				if (((num < 1) == true) || ((num > Integer.MAX_VALUE) == true)) {
-					return false;
-				}
-				return true;
-			}
-		}));
-		list.add(new InputUsuarioString("Digite o nome do aluno: ", new ValidadorString() {	
-			@Override
-			public boolean test(String str) {
-				if ((str.isBlank() == true) || (str.isEmpty() == true)) {
-					return false;
-				}
-				return true;
-			}
-		}));
-		list.add(new InputUsuarioString("Digite a data nascimento(dd/mm/yyyy): ", new ValidadorString() {	
-			@Override
-			public boolean test(String str) {
-				Pattern p = Pattern.compile("\\d{2}/\\d{2}/\\d{4}");
-				Matcher m = p.matcher(str);
-				if (m.matches() == false) {
-					return false;
-				}
-				try {
-					LocalDate date = LocalDate.parse(str, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-				} catch (DateTimeParseException e) {
-					return false;
-				}
-				return true;
-			}
-		}));
+		list.add(new InputUsuarioNumeroInterio("Digite a matricula do aluno: ", new ValidadorMatricula()));
+		list.add(new InputUsuarioString("Digite o nome do aluno: ", new ValidadorNome()));
+		list.add(new InputUsuarioString("Digite a data nascimento(dd/mm/yyyy): ", new ValidadorDataNascimento()));
 		Object[] array = tu.formulario("SALVAR ALUNO", list);
 		try {
 			int matricula = (int) array[0];
