@@ -5,8 +5,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.java.com.exceptions.MatriculaInvalidaException;
-import main.java.com.exceptions.NomeInvalidoException;
 import main.java.com.exceptions.SistemaEscolarException;
 import main.java.com.model.Aluno;
 import main.java.com.model.OpcaoOrdenacao;

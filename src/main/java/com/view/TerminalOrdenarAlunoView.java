@@ -1,18 +1,9 @@
 package main.java.com.view;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import main.java.com.controller.AlunoController;
 import main.java.com.exceptions.SistemaEscolarException;
-import main.java.com.util.ValidadorDataNascimento;
-import main.java.com.util.ValidadorMatricula;
-import main.java.com.util.ValidadorNome;
 
 public class TerminalOrdenarAlunoView {
 

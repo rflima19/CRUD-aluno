@@ -5,7 +5,6 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -13,7 +12,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.io.RandomAccessFile;
 import java.io.Reader;
 import java.io.Writer;
 import java.time.LocalDate;
@@ -22,14 +20,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Scanner;
 import java.util.regex.Pattern;
 
-import main.java.com.exceptions.MatriculaDuplicadaException;
 import main.java.com.exceptions.SistemaEscolarException;
 import main.java.com.model.Aluno;
-import main.java.com.util.AlunoMatriculaComparator;
 import main.java.com.util.AlunoDataNascimentoComparator;
+import main.java.com.util.AlunoMatriculaComparator;
 import main.java.com.util.AlunoNomeComparator;
 
 public class AlunoFileDAO {
@@ -91,7 +87,6 @@ public class AlunoFileDAO {
 
 		try (Writer writer = new FileWriter(AlunoFileDAO.FILE_TXT, true);
 				PrintWriter pw = new PrintWriter(writer)) {
-			//String matricula = Integer.toString(aluno.getMatricula());
 			pw.print(aluno.getMatricula());
 			pw.print(AlunoFileDAO.SEPARADOR);
 			pw.print(aluno.getNome());
@@ -285,6 +280,9 @@ public class AlunoFileDAO {
 	
 	private List<Aluno> recuperarRegistrosFileTexto() throws SistemaEscolarException {
 		List<Aluno> list = new ArrayList<>();
+		if (AlunoFileDAO.FILE_TXT.exists() == false) {
+			return list;
+		}
 		try (Reader reader = new FileReader(AlunoFileDAO.FILE_TXT);
 				BufferedReader buffer = new BufferedReader(reader)) {
 			String line = null;

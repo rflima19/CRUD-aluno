@@ -18,6 +18,7 @@ public class ValidadorDataNascimento implements ValidadorString {
 			return false;
 		}
 		try {
+			@SuppressWarnings("unused")
 			LocalDate date = LocalDate.parse(str, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 		} catch (DateTimeParseException e) {
 			return false;

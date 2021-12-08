@@ -2,6 +2,11 @@ package main.java.com.exceptions;
 
 public class SistemaEscolarRuntimeException extends RuntimeException {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3601990653954299329L;
+
 	public SistemaEscolarRuntimeException() {
 		super();
 	}

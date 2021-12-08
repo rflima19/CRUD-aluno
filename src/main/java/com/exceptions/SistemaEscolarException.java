@@ -2,6 +2,11 @@ package main.java.com.exceptions;
 
 public class SistemaEscolarException extends Exception {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1710156070942325562L;
+
 	public SistemaEscolarException() {
 		super();
 	}
