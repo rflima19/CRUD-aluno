@@ -19,6 +19,7 @@ import java.io.Writer;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
@@ -27,6 +28,9 @@ import java.util.regex.Pattern;
 import main.java.com.exceptions.MatriculaDuplicadaException;
 import main.java.com.exceptions.SistemaEscolarException;
 import main.java.com.model.Aluno;
+import main.java.com.util.AlunoMatriculaComparator;
+import main.java.com.util.AlunoDataNascimentoComparator;
+import main.java.com.util.AlunoNomeComparator;
 
 public class AlunoFileDAO {
 
@@ -50,7 +54,6 @@ public class AlunoFileDAO {
 					AlunoFileDAO.DIRECTORY.mkdir();
 				}
 				AlunoFileDAO.FILE_BINARY.createNewFile();
-				System.out.println("Arquivo criado");
 			} catch (IOException e) {
 				throw new SistemaEscolarException("Não foi possivel criar o arquivo binário", e);
 			}
@@ -209,6 +212,45 @@ public class AlunoFileDAO {
 		return this.persistirRegistrosFileBinario(alunos);
 	}
 	
+	public boolean alterarFileBinario(int matricula, String nome, LocalDate dataNascimento) throws SistemaEscolarException {
+		List<Aluno> alunos = this.recuperarRegistrosFileBinario();
+		for (Aluno aluno : alunos) {
+			if (aluno.getMatricula() == matricula) {
+				aluno.setNome(nome);
+				aluno.setNascimento(dataNascimento);
+				break;
+			}
+		}
+		return this.persistirRegistrosFileBinario(alunos);
+	}
+	
+	public List<Aluno> ordenarPorMatriculaFileBinario() throws SistemaEscolarException {
+		List<Aluno> alunos = this.recuperarRegistrosFileBinario();
+		if (alunos.size() == 0) {
+			return null;
+		}
+		Collections.sort(alunos, new AlunoMatriculaComparator());
+		return alunos;
+	}
+	
+	public List<Aluno> ordenarPorNomeFileBinario() throws SistemaEscolarException {
+		List<Aluno> alunos = this.recuperarRegistrosFileBinario();
+		if (alunos.size() == 0) {
+			return null;
+		}
+		Collections.sort(alunos, new AlunoNomeComparator());
+		return alunos;
+	}
+
+	public List<Aluno> ordenarPorDataNascimentoFileBinario() throws SistemaEscolarException {
+		List<Aluno> alunos = this.recuperarRegistrosFileBinario();
+		if (alunos.size() == 0) {
+			return null;
+		}
+		Collections.sort(alunos, new AlunoDataNascimentoComparator());
+		return alunos;
+	}
+
 	private List<Aluno> recuperarRegistrosFileBinario() throws SistemaEscolarException {
 		List<Aluno> list = new ArrayList<>();
 		if (AlunoFileDAO.FILE_BINARY.exists() == false) {
@@ -273,11 +315,5 @@ public class AlunoFileDAO {
 			this.salvarAlunoFileBinario(aluno);
 		}
 		return true;
-	}
-	
-	public static void main(String[] args) throws SistemaEscolarException {
-		AlunoFileDAO a = new AlunoFileDAO();
-		System.out.println(a.recuperarRegistrosFileBinario());
-		System.out.println(a.recuperarRegistrosFileTexto());
 	}
 }

@@ -119,16 +119,40 @@ public class Aluno implements Comparable<Aluno> {
 	}
 
 	public static Aluno consultar(int matricula) throws SistemaEscolarException {
+//		Aluno aluno = Aluno.alunoDAO.consultaFileBinario(matricula);
+//		// List<Aluno> alunos = Aluno.alunoDAO.consultaFileTexto(matricula);
+//		if (aluno == null) {
+//			throw new SistemaEscolarException("Base de dados vazia!",
+//					new ArquivoVazioException("Base de dados vazia!"));
+//		}
+//		return aluno;
+		
 		return Aluno.alunoDAO.consultaFileBinario(matricula);
 		// return Aluno.alunoDAO.consultaFileTexto(matricula);
 	}
 
 	public static List<Aluno> consultar(String nome) throws SistemaEscolarException {
+//		List<Aluno> alunos = Aluno.alunoDAO.consultaFileBinario(nome);
+//		// List<Aluno> alunos = Aluno.alunoDAO.consultaFileTexto(nome);
+//		if (alunos == null) {
+//			throw new SistemaEscolarException("Base de dados vazia!",
+//					new ArquivoVazioException("Base de dados vazia!"));
+//		}
+//		return alunos;
+		
 		return Aluno.alunoDAO.consultaFileBinario(nome);
 		// return Aluno.alunoDAO.consultaFileTexto(nome);
 	}
 
 	public static List<Aluno> consultar(LocalDate dataNascimento) throws SistemaEscolarException {
+//		List<Aluno> alunos = Aluno.alunoDAO.consultaFileBinario(dataNascimento);
+//		// List<Aluno> alunos = Aluno.alunoDAO.consultaFileTexto(dataNascimento);
+//		if (alunos == null) {
+//			throw new SistemaEscolarException("Base de dados vazia!",
+//					new ArquivoVazioException("Base de dados vazia!"));
+//		}
+//		return alunos;
+//		
 		return Aluno.alunoDAO.consultaFileBinario(dataNascimento);
 		// return Aluno.alunoDAO.consultaFileTexto(dataNascimento);
 	}
@@ -145,6 +169,26 @@ public class Aluno implements Comparable<Aluno> {
 
 	public boolean excluir() throws SistemaEscolarException {
 		return alunoDAO.excluirFileBinairo(this);
+	}
+	
+	public boolean alterar(String nome, String dataNascimento) throws SistemaEscolarException {
+		return alunoDAO.alterarFileBinario(this.matricula, nome, LocalDate.parse(dataNascimento, Aluno.FORMATTER));
+	}
+	
+	public static List<Aluno> ordenar(OpcaoOrdenacao opcao) throws SistemaEscolarException {
+		List<Aluno> list = null;
+		if (OpcaoOrdenacao.MATRICULA.equals(opcao)) {
+			list = alunoDAO.ordenarPorMatriculaFileBinario();
+		} else if (OpcaoOrdenacao.NOME.equals(opcao)) {
+			list = alunoDAO.ordenarPorNomeFileBinario();
+		} else if (OpcaoOrdenacao.DATA_NASCIMENTO.equals(opcao)) {
+			list = alunoDAO.ordenarPorDataNascimentoFileBinario();
+		}
+		if (list == null) {
+			throw new SistemaEscolarException("Base de dados vazia!",
+					new ArquivoVazioException("Base de dados vazia!"));
+		}
+		return list;
 	}
 
 }
