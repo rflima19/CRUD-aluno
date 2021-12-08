@@ -5,6 +5,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -12,11 +13,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.io.RandomAccessFile;
 import java.io.Reader;
 import java.io.Writer;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -33,14 +36,21 @@ public class AlunoFileDAO {
 	public static final String SEPARADOR = ";";
 	public static final int BYTES_REGISTRO = 124;
 	
+	public AlunoFileDAO() {
+		super();
+	}
+
 	/*
 	 * Cada registro salvo de aluno consome 124 bytes do arquivo
 	 * */
 	public synchronized boolean salvarAlunoFileBinario(Aluno aluno) throws SistemaEscolarException {
 		if (AlunoFileDAO.FILE_BINARY.exists() == false) {
 			try {
-				AlunoFileDAO.DIRECTORY.mkdir();
+				if (AlunoFileDAO.DIRECTORY.exists() == false) {
+					AlunoFileDAO.DIRECTORY.mkdir();
+				}
 				AlunoFileDAO.FILE_BINARY.createNewFile();
+				System.out.println("Arquivo criado");
 			} catch (IOException e) {
 				throw new SistemaEscolarException("Não foi possivel criar o arquivo binário", e);
 			}
@@ -67,7 +77,9 @@ public class AlunoFileDAO {
 	public synchronized boolean salvarAlunoFileTexto(Aluno aluno) throws SistemaEscolarException {
 		if (AlunoFileDAO.FILE_TXT.exists() == false) {
 			try {
-				AlunoFileDAO.DIRECTORY.mkdir();
+				if (AlunoFileDAO.DIRECTORY.exists() == false) {
+					AlunoFileDAO.DIRECTORY.mkdir();
+				}
 				AlunoFileDAO.FILE_TXT.createNewFile();
 			} catch (IOException e) {
 				throw new SistemaEscolarException("Não foi possivel criar o arquivo binário", e);
@@ -184,8 +196,24 @@ public class AlunoFileDAO {
 		return null;
 	}
 	
+	public boolean excluirFileBinairo(Aluno aluno) throws SistemaEscolarException {
+		List<Aluno> alunos = this.recuperarRegistrosFileBinario();
+		Iterator<Aluno> iterator = alunos.iterator();
+		while (iterator.hasNext() == true) {
+			Aluno a = iterator.next();
+			if (a.equals(aluno) == true) {
+				iterator.remove();
+				break;
+			}
+		}
+		return this.persistirRegistrosFileBinario(alunos);
+	}
+	
 	private List<Aluno> recuperarRegistrosFileBinario() throws SistemaEscolarException {
 		List<Aluno> list = new ArrayList<>();
+		if (AlunoFileDAO.FILE_BINARY.exists() == false) {
+			return list;
+		}
 		long tamanhoArquivo = AlunoFileDAO.FILE_BINARY.length();
 		long numRegistros = tamanhoArquivo / AlunoFileDAO.BYTES_REGISTRO;
 		try (InputStream inBytes = new FileInputStream(AlunoFileDAO.FILE_BINARY);
@@ -234,9 +262,17 @@ public class AlunoFileDAO {
 		return list;
 	}
 
-	
-	private List<Aluno> persistirRegistros() {
-		return null;
+	private boolean persistirRegistrosFileBinario(List<Aluno> alunos) throws SistemaEscolarException {
+		if ((alunos == null) || (AlunoFileDAO.FILE_BINARY.length() == 0)) {
+			return false;
+		}
+		if (AlunoFileDAO.FILE_BINARY.exists() == true) {
+			AlunoFileDAO.FILE_BINARY.delete();
+		}
+		for (Aluno aluno : alunos) {
+			this.salvarAlunoFileBinario(aluno);
+		}
+		return true;
 	}
 	
 	public static void main(String[] args) throws SistemaEscolarException {

@@ -143,4 +143,8 @@ public class Aluno implements Comparable<Aluno> {
 		return alunos;
 	}
 
+	public boolean excluir() throws SistemaEscolarException {
+		return alunoDAO.excluirFileBinairo(this);
+	}
+
 }

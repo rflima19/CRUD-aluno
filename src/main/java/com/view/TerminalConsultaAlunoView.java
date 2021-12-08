@@ -45,14 +45,6 @@ public class TerminalConsultaAlunoView {
 			if (dadosAluno == null) {
 				tu.exibirMensagem("Aluno não encontrado!");
 			} else {
-//				for (String[] dados : dadosAluno) {
-//					StringBuilder strb = new StringBuilder();
-//					strb.append("Aluno encontrado:%n");
-//					strb.append("Matricula: " + dados[0] + "%n");
-//					strb.append("Nome: " + dados[1] + "%n");
-//					strb.append("Data Nascimento: " + dados[2]);
-//					tu.exibirMensagem(strb.toString());
-//				}
 				String[] titulos = new String[]{"MATRICULA", "NOME", "DATA NASCIMENTO"};
 				tu.imprimirTabela(titulos, dadosAluno);
 			}

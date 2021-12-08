@@ -67,4 +67,12 @@ public class AlunoController {
 		}
 		return resultAlunos;
 	}
+
+	public boolean excluirAluno(int matricula) throws SistemaEscolarException {
+		Aluno aluno = Aluno.consultar(matricula);
+		if (aluno != null) {
+			return aluno.excluir();
+		}
+		return false;
+	}
 }
