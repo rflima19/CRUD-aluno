@@ -21,7 +21,7 @@ import main.java.com.util.AlunoDataNascimentoComparator;
 import main.java.com.util.AlunoMatriculaComparator;
 import main.java.com.util.AlunoNomeComparator;
 
-public class AlunoFileDAO2 {
+public class AlunoFileDAO2 implements AlunoDAO {
 
 	public static final File DIRECTORY = new File("files" + File.separator);
 	public static final File FILE = new File(AlunoFileDAO2.DIRECTORY, "alunos.txt");
@@ -185,27 +185,27 @@ public class AlunoFileDAO2 {
 	
 	public synchronized List<Aluno> ordenarPorMatricula() throws SistemaEscolarException {
 		List<Aluno> alunos = this.listar();
-		if (alunos.size() == 0) {
-			return null;
-		}
+//		if (alunos.size() == 0) {
+//			return null;
+//		}
 		Collections.sort(alunos, new AlunoMatriculaComparator());
 		return alunos;
 	}
 	
 	public synchronized List<Aluno> ordenarPorNome() throws SistemaEscolarException {
 		List<Aluno> alunos = this.listar();
-		if (alunos.size() == 0) {
-			return null;
-		}
+//		if (alunos.size() == 0) {
+//			return null;
+//		}
 		Collections.sort(alunos, new AlunoNomeComparator());
 		return alunos;
 	}
 
 	public synchronized List<Aluno> ordenarPorDataNascimento() throws SistemaEscolarException {
 		List<Aluno> alunos = this.listar();
-		if (alunos.size() == 0) {
-			return null;
-		}
+//		if (alunos.size() == 0) {
+//			return null;
+//		}
 		Collections.sort(alunos, new AlunoDataNascimentoComparator());
 		return alunos;
 	}
@@ -287,9 +287,9 @@ public class AlunoFileDAO2 {
 		if (arquivoDestino.isDirectory() == true) {
 			throw new IllegalArgumentException("Falha ao copiar arquivo: Objeto File de destino se refere a um diretório");
 		}
-		try (Reader reader = new FileReader(AlunoFileDAO2.FILE);
+		try (Reader reader = new FileReader(arquivoOrigem);
 				BufferedReader buffer = new BufferedReader(reader);
-				Writer writer = new FileWriter(AlunoFileDAO2.FILE);
+				Writer writer = new FileWriter(arquivoDestino);
 				PrintWriter pw = new PrintWriter(writer)) {
 			String line = null;
 			while ((line = buffer.readLine()) != null) {

@@ -13,7 +13,7 @@ public class TerminalUsuario {
 		if (titulos.length == 0) {
 			throw new IllegalArgumentException("Array com tamanho 0");
 		}
-		System.out.printf("%n");
+		//System.out.printf("%n");
 		this.exibirCabecario(titulo);
 
 		int opcao = 0;

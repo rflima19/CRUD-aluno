@@ -18,7 +18,7 @@ public class TerminalOrdenarAlunoView {
 		TerminalUsuario tu = new TerminalUsuario();
 		
 		String[] tituloOpcoes = { "MATRICULA", "NOME", "DATA NASCIMENTO" };
-		int opcao = tu.menuOpcoes("OPÇÕES DE ORDENACÃO", tituloOpcoes);
+		int opcao = tu.menuOpcoes("OPÇÕES DE ORDENAÇÃO", tituloOpcoes);
 
 		try {
 			List<String[]> listaOrdenada = this.alunoController.ordenarAluno(opcao);
