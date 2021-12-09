@@ -31,7 +31,7 @@ public class TerminalAlterarAlunoView {
 			List<String[]> aluno = this.alunoController.consultarAluno(matricula);
 			if (aluno != null) {
 				String[] dadosAluno = aluno.get(0);
-				String mensagem = String.format("%s%n%s%n%s%n%s%n", 
+				String mensagem = String.format("%s%nMatricula: %s%nNome: %s%nData Nascimento: %s%n", 
 						"Aluno selecionado:", dadosAluno[0], dadosAluno[1], dadosAluno[2]);
 				tu.exibirMensagem(mensagem);
 				List<InputUsuario> list = new ArrayList<>();

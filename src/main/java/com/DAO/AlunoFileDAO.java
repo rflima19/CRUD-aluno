@@ -81,7 +81,7 @@ public class AlunoFileDAO {
 				}
 				AlunoFileDAO.FILE_TXT.createNewFile();
 			} catch (IOException e) {
-				throw new SistemaEscolarException("Não foi possivel criar o arquivo binário", e);
+				throw new SistemaEscolarException("Não foi possivel criar o arquivo de texto", e);
 			}
 		}
 
@@ -194,7 +194,7 @@ public class AlunoFileDAO {
 		return null;
 	}
 	
-	public boolean excluirFileBinairo(Aluno aluno) throws SistemaEscolarException {
+	public synchronized boolean excluirFileBinairo(Aluno aluno) throws SistemaEscolarException {
 		List<Aluno> alunos = this.recuperarRegistrosFileBinario();
 		Iterator<Aluno> iterator = alunos.iterator();
 		while (iterator.hasNext() == true) {
@@ -207,7 +207,7 @@ public class AlunoFileDAO {
 		return this.persistirRegistrosFileBinario(alunos);
 	}
 	
-	public boolean alterarFileBinario(int matricula, String nome, LocalDate dataNascimento) throws SistemaEscolarException {
+	public synchronized boolean alterarFileBinario(int matricula, String nome, LocalDate dataNascimento) throws SistemaEscolarException {
 		List<Aluno> alunos = this.recuperarRegistrosFileBinario();
 		for (Aluno aluno : alunos) {
 			if (aluno.getMatricula() == matricula) {
@@ -219,7 +219,7 @@ public class AlunoFileDAO {
 		return this.persistirRegistrosFileBinario(alunos);
 	}
 	
-	public List<Aluno> ordenarPorMatriculaFileBinario() throws SistemaEscolarException {
+	public synchronized List<Aluno> ordenarPorMatriculaFileBinario() throws SistemaEscolarException {
 		List<Aluno> alunos = this.recuperarRegistrosFileBinario();
 		if (alunos.size() == 0) {
 			return null;
@@ -228,7 +228,7 @@ public class AlunoFileDAO {
 		return alunos;
 	}
 	
-	public List<Aluno> ordenarPorNomeFileBinario() throws SistemaEscolarException {
+	public synchronized List<Aluno> ordenarPorNomeFileBinario() throws SistemaEscolarException {
 		List<Aluno> alunos = this.recuperarRegistrosFileBinario();
 		if (alunos.size() == 0) {
 			return null;
@@ -237,7 +237,7 @@ public class AlunoFileDAO {
 		return alunos;
 	}
 
-	public List<Aluno> ordenarPorDataNascimentoFileBinario() throws SistemaEscolarException {
+	public synchronized List<Aluno> ordenarPorDataNascimentoFileBinario() throws SistemaEscolarException {
 		List<Aluno> alunos = this.recuperarRegistrosFileBinario();
 		if (alunos.size() == 0) {
 			return null;
