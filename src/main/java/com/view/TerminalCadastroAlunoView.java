@@ -3,7 +3,6 @@ package main.java.com.view;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.java.com.controller.AlunoController;
 import main.java.com.exceptions.SistemaEscolarException;
 import main.java.com.facade.FacadeConcrete;
 import main.java.com.facade.FacadeOfSystem;
@@ -13,12 +12,10 @@ import main.java.com.util.ValidadorNome;
 
 public class TerminalCadastroAlunoView {
 	
-	// private AlunoController alunoController;
 	private FacadeOfSystem fachada;
 	
 	public TerminalCadastroAlunoView() {
 		super();
-		//this.alunoController = new AlunoController();
 		this.fachada = FacadeConcrete.getFacade();
 	}
 
@@ -33,7 +30,6 @@ public class TerminalCadastroAlunoView {
 			int matricula = (int) array[0];
 			String nome = (String) array[1];
 			String dataNascimento = (String) array[2];
-			// boolean result = this.alunoController.salvarAluno(matricula, nome, dataNascimento);
 			boolean result = this.fachada.salvarAluno(matricula, nome, dataNascimento);
 			if (result == true) {
 				tu.exibirMensagem("Aluno " + nome + " salvo com sucesso!");

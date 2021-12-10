@@ -2,19 +2,16 @@ package main.java.com.view;
 
 import java.util.List;
 
-import main.java.com.controller.AlunoController;
 import main.java.com.exceptions.SistemaEscolarException;
 import main.java.com.facade.FacadeConcrete;
 import main.java.com.facade.FacadeOfSystem;
 
 public class TerminalOrdenarAlunoView {
 
-	// private AlunoController alunoController;
 	private FacadeOfSystem fachada;
 
 	public TerminalOrdenarAlunoView() {
 		super();
-		// this.alunoController = new AlunoController();
 		this.fachada = FacadeConcrete.getFacade();
 	}
 
@@ -25,7 +22,6 @@ public class TerminalOrdenarAlunoView {
 		int opcao = tu.menuOpcoes("OPÇÕES DE ORDENAÇÃO", tituloOpcoes);
 
 		try {
-			// List<String[]> listaOrdenada = this.alunoController.ordenarAluno(opcao);
 			List<String[]> listaOrdenada = this.fachada.ordenarAlunos(opcao);
 			String[] titulos = new String[]{"MATRICULA", "NOME", "DATA NASCIMENTO"};
 			tu.imprimirTabela(titulos, listaOrdenada);

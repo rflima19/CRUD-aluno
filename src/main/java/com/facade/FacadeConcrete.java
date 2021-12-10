@@ -74,32 +74,22 @@ public class FacadeConcrete implements FacadeOfSystem {
 
 	@Override
 	public void salvarProfessor() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void deletarProfessor() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void atualizarProfessor() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void listarProfessores() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void pesquisarProfessor() {
-		// TODO Auto-generated method stub
-		
 	}
 	
 	@Override
