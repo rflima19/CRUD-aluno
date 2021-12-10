@@ -1,8 +1,6 @@
-##Sistema Escolar 
+##Sistema de CRUD (Create, Read, Update, Delete) 
 
-###DescriÃ§Ã£o
+###Descrição
 
-	Um sistema escolar bÃ¡sico.
-	A implementaÃ§Ã£o desse sistema possui apenas o propÃ³sito de aprendizado.
-	
-### Como Executar
+	Um sistema básico com opções de criação, atualização, remoção e alteração de dados.
+	A implementação desse sistema possui apenas o propósito de aprendizado.
