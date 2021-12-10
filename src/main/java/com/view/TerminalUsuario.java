@@ -94,6 +94,7 @@ public class TerminalUsuario {
 			this.imprimirLinha();
 		}
 		this.imprimirLinha();
+		System.out.println();
 	}
 
 	public void exibirMensagemErro(Exception exc) {

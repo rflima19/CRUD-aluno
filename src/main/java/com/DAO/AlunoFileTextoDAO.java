@@ -21,47 +21,47 @@ import main.java.com.util.AlunoDataNascimentoComparator;
 import main.java.com.util.AlunoMatriculaComparator;
 import main.java.com.util.AlunoNomeComparator;
 
-public class AlunoFileDAO2 implements AlunoDAO {
+public class AlunoFileTextoDAO implements AlunoDAO {
 
 	public static final File DIRECTORY = new File("files" + File.separator);
-	public static final File FILE = new File(AlunoFileDAO2.DIRECTORY, "alunos.txt");
+	public static final File FILE = new File(AlunoFileTextoDAO.DIRECTORY, "alunos.txt");
 	public static final String SEPARADOR = ";";
 	
-	public AlunoFileDAO2() {
+	public AlunoFileTextoDAO() {
 		super();
 	}
 
 	public synchronized boolean salvar(Aluno aluno) throws SistemaEscolarException {
 		try {
-			this.criarDiretorio(AlunoFileDAO2.DIRECTORY);
-			this.criarArquivo(AlunoFileDAO2.FILE);
+			this.criarDiretorio(AlunoFileTextoDAO.DIRECTORY);
+			this.criarArquivo(AlunoFileTextoDAO.FILE);
 		} catch (IOException e) {
 			throw new SistemaEscolarException("Não foi possivel criar o arquivo", e);
 		}
-		try (Writer writer = new FileWriter(AlunoFileDAO2.FILE, true);
+		try (Writer writer = new FileWriter(AlunoFileTextoDAO.FILE, true);
 				PrintWriter pw = new PrintWriter(writer)) {
 			String line = this.converterAluno(aluno);
 			pw.println(line);
 		} catch (IOException e) {
 			throw new SistemaEscolarException(
-				"Falha ao abrir o arquivo " + AlunoFileDAO2.FILE.getAbsolutePath() + 
+				"Falha ao abrir o arquivo " + AlunoFileTextoDAO.FILE.getAbsolutePath() + 
 					" para escrita", e);
 		}
 		return true;
 	}
 	
 	public synchronized boolean excluir(Aluno aluno) throws SistemaEscolarException {
-		if (AlunoFileDAO2.FILE.exists() == false) {
+		if (AlunoFileTextoDAO.FILE.exists() == false) {
 			throw new SistemaEscolarException("Base de dados inexistente");
 		}
-		File arquivoTemporario = new File(AlunoFileDAO2.DIRECTORY, "alunos_temp.txt");
+		File arquivoTemporario = new File(AlunoFileTextoDAO.DIRECTORY, "alunos_temp.txt");
 		try {
 			this.criarArquivo(arquivoTemporario);
 		} catch (IOException e) {
 			throw new SistemaEscolarException("Não foi possivel criar o arquivo temporário para realizar operação de exclusão", e);
 		}
 		try {
-			try (Reader reader = new FileReader(AlunoFileDAO2.FILE);
+			try (Reader reader = new FileReader(AlunoFileTextoDAO.FILE);
 					BufferedReader buffer = new BufferedReader(reader)) {
 				try (Writer writer = new FileWriter(arquivoTemporario);
 						PrintWriter pw = new PrintWriter(writer)) {
@@ -79,12 +79,12 @@ public class AlunoFileDAO2 implements AlunoDAO {
 				}
 			} catch (IOException e) {
 				throw new SistemaEscolarException(
-					"Falha ao abrir o arquivo " + AlunoFileDAO2.FILE.getAbsolutePath() + 
+					"Falha ao abrir o arquivo " + AlunoFileTextoDAO.FILE.getAbsolutePath() + 
 						" para leitura", e);
 			}
 			
 			try {
-				this.copiarArquivo(arquivoTemporario, AlunoFileDAO2.FILE);
+				this.copiarArquivo(arquivoTemporario, AlunoFileTextoDAO.FILE);
 			} catch (IOException e) {
 				throw new SistemaEscolarException("Falha ao copiar do arquivo temporário", e);
 			}
@@ -97,11 +97,11 @@ public class AlunoFileDAO2 implements AlunoDAO {
 	}
 	
 	public synchronized Aluno consultar(int matricula) throws SistemaEscolarException {
-		if (AlunoFileDAO2.FILE.exists() == false) {
+		if (AlunoFileTextoDAO.FILE.exists() == false) {
 			throw new SistemaEscolarException("Base de dados inexistente");
 		}
 		Aluno aluno = null;
-		try (Reader reader = new FileReader(AlunoFileDAO2.FILE);
+		try (Reader reader = new FileReader(AlunoFileTextoDAO.FILE);
 			BufferedReader buffer = new BufferedReader(reader)) {
 			String line = null;
 			while ((line = buffer.readLine()) != null) {
@@ -113,18 +113,18 @@ public class AlunoFileDAO2 implements AlunoDAO {
 			}
 		} catch (IOException e) {
 			throw new SistemaEscolarException(
-				"Falha ao abrir o arquivo " + AlunoFileDAO2.FILE.getAbsolutePath() + 
+				"Falha ao abrir o arquivo " + AlunoFileTextoDAO.FILE.getAbsolutePath() + 
 					" para leitura", e);
 		}
 		return aluno;
 	}
 	
 	public synchronized List<Aluno> consultar(String nome) throws SistemaEscolarException {
-		if (AlunoFileDAO2.FILE.exists() == false) {
+		if (AlunoFileTextoDAO.FILE.exists() == false) {
 			throw new SistemaEscolarException("Base de dados inexistente");
 		}
 		List<Aluno> alunos = new ArrayList<>();
-		try (Reader reader = new FileReader(AlunoFileDAO2.FILE);
+		try (Reader reader = new FileReader(AlunoFileTextoDAO.FILE);
 			BufferedReader buffer = new BufferedReader(reader)) {
 			String line = null;
 			while ((line = buffer.readLine()) != null) {
@@ -135,18 +135,18 @@ public class AlunoFileDAO2 implements AlunoDAO {
 			}
 		} catch (IOException e) {
 			throw new SistemaEscolarException(
-				"Falha ao abrir o arquivo " + AlunoFileDAO2.FILE.getAbsolutePath() + 
+				"Falha ao abrir o arquivo " + AlunoFileTextoDAO.FILE.getAbsolutePath() + 
 					" para leitura", e);
 		}
 		return alunos;
 	}
 	
 	public synchronized List<Aluno> consultar(LocalDate dataNascimento) throws SistemaEscolarException {
-		if (AlunoFileDAO2.FILE.exists() == false) {
+		if (AlunoFileTextoDAO.FILE.exists() == false) {
 			throw new SistemaEscolarException("Base de dados inexistente");
 		}
 		List<Aluno> alunos = new ArrayList<>();
-		try (Reader reader = new FileReader(AlunoFileDAO2.FILE);
+		try (Reader reader = new FileReader(AlunoFileTextoDAO.FILE);
 			BufferedReader buffer = new BufferedReader(reader)) {
 			String line = null;
 			while ((line = buffer.readLine()) != null) {
@@ -157,18 +157,18 @@ public class AlunoFileDAO2 implements AlunoDAO {
 			}
 		} catch (IOException e) {
 			throw new SistemaEscolarException(
-				"Falha ao abrir o arquivo " + AlunoFileDAO2.FILE.getAbsolutePath() + 
+				"Falha ao abrir o arquivo " + AlunoFileTextoDAO.FILE.getAbsolutePath() + 
 					" para leitura", e);
 		}
 		return alunos;
 	}
 	
 	public synchronized List<Aluno> listar() throws SistemaEscolarException {
-		if (AlunoFileDAO2.FILE.exists() == false) {
+		if (AlunoFileTextoDAO.FILE.exists() == false) {
 			throw new SistemaEscolarException("Base de dados inexistente");
 		}
 		List<Aluno> alunos = new ArrayList<>();
-		try (Reader reader = new FileReader(AlunoFileDAO2.FILE);
+		try (Reader reader = new FileReader(AlunoFileTextoDAO.FILE);
 			BufferedReader buffer = new BufferedReader(reader)) {
 			String line = null;
 			while ((line = buffer.readLine()) != null) {
@@ -177,7 +177,7 @@ public class AlunoFileDAO2 implements AlunoDAO {
 			}
 		} catch (IOException e) {
 			throw new SistemaEscolarException(
-				"Falha ao abrir o arquivo " + AlunoFileDAO2.FILE.getAbsolutePath() + 
+				"Falha ao abrir o arquivo " + AlunoFileTextoDAO.FILE.getAbsolutePath() + 
 					" para leitura", e);
 		}
 		return alunos;
@@ -212,17 +212,17 @@ public class AlunoFileDAO2 implements AlunoDAO {
 
 	public synchronized boolean atualizar(Aluno aluno, 
 			String novoNome, LocalDate novaDataNascimento) throws SistemaEscolarException {
-		if (AlunoFileDAO2.FILE.exists() == false) {
+		if (AlunoFileTextoDAO.FILE.exists() == false) {
 			throw new SistemaEscolarException("Base de dados inexistente");
 		}
-		File arquivoTemporario = new File(AlunoFileDAO2.DIRECTORY, "alunos_temp.txt");
+		File arquivoTemporario = new File(AlunoFileTextoDAO.DIRECTORY, "alunos_temp.txt");
 		try {
 			this.criarArquivo(arquivoTemporario);
 		} catch (IOException e) {
 			throw new SistemaEscolarException("Não foi possivel criar o arquivo temporário para realizar operação de alteração", e);
 		}
 		try {
-			try (Reader reader = new FileReader(AlunoFileDAO2.FILE);
+			try (Reader reader = new FileReader(AlunoFileTextoDAO.FILE);
 					BufferedReader buffer = new BufferedReader(reader)) {
 				try (Writer writer = new FileWriter(arquivoTemporario);
 						PrintWriter pw = new PrintWriter(writer)) {
@@ -245,12 +245,12 @@ public class AlunoFileDAO2 implements AlunoDAO {
 				}
 			} catch (IOException e) {
 				throw new SistemaEscolarException(
-					"Falha ao abrir o arquivo " + AlunoFileDAO2.FILE.getAbsolutePath() + 
+					"Falha ao abrir o arquivo " + AlunoFileTextoDAO.FILE.getAbsolutePath() + 
 						" para leitura", e);
 			}
 			
 			try {
-				this.copiarArquivo(arquivoTemporario, AlunoFileDAO2.FILE);
+				this.copiarArquivo(arquivoTemporario, AlunoFileTextoDAO.FILE);
 			} catch (IOException e) {
 				throw new SistemaEscolarException("Falha ao copiar do arquivo temporário", e);
 			}
@@ -264,13 +264,13 @@ public class AlunoFileDAO2 implements AlunoDAO {
 	
 	private void criarDiretorio(File diretorio) throws IOException {
 		if ((diretorio.exists() == false) && (diretorio.isDirectory() == true)) {
-			AlunoFileDAO.DIRECTORY.mkdir();
+			AlunoFileTextoDAO.DIRECTORY.mkdir();
 		}
 	}
 	
 	private void criarArquivo(File arquivo) throws IOException {
 		if ((arquivo.exists() == false) && (arquivo.isFile() == true)) {
-			AlunoFileDAO.FILE_TXT.createNewFile();
+			AlunoFileTextoDAO.FILE.createNewFile();
 		}
 	}
 	
@@ -301,15 +301,15 @@ public class AlunoFileDAO2 implements AlunoDAO {
 	private String converterAluno(Aluno aluno) {
 		StringBuilder strb = new StringBuilder();
 		strb.append(aluno.getMatricula());
-		strb.append(AlunoFileDAO2.SEPARADOR);
+		strb.append(AlunoFileTextoDAO.SEPARADOR);
 		strb.append(aluno.getNome());
-		strb.append(AlunoFileDAO2.SEPARADOR);
+		strb.append(AlunoFileTextoDAO.SEPARADOR);
 		strb.append(aluno.getNascimento().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 		return strb.toString();
 	}
 	
 	private Aluno desconverterAluno(String srt) throws SistemaEscolarException {
-		String[] tokens = srt.split(AlunoFileDAO2.SEPARADOR);
+		String[] tokens = srt.split(AlunoFileTextoDAO.SEPARADOR);
 		int matricula = Integer.parseInt(tokens[0]);
 		String nome = tokens[1];
 		String dataNascimento = tokens[2];
