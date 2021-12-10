@@ -3,32 +3,33 @@ package main.java.com.view;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.java.com.controller.AlunoController;
 import main.java.com.exceptions.SistemaEscolarException;
+import main.java.com.facade.FacadeConcrete;
+import main.java.com.facade.FacadeOfSystem;
 import main.java.com.util.ValidadorDataNascimento;
 import main.java.com.util.ValidadorMatricula;
 import main.java.com.util.ValidadorNome;
 
 public class TerminalAlterarAlunoView {
 
-	private AlunoController alunoController;
+	private FacadeOfSystem fachada;
 
 	public TerminalAlterarAlunoView() {
 		super();
-		this.alunoController = new AlunoController();
+		this.fachada = FacadeConcrete.getFacade();
 	}
 
 	public void alterarAluno() {
 		TerminalUsuario tu = new TerminalUsuario();
 		try {
-			List<String[]> lista = this.alunoController.obterAlunos();
+			List<String[]> lista = this.fachada.listarAlunos();
 			String[] titulos = new String[] { "MATRICULA", "NOME", "DATA NASCIMENTO" };
 			tu.imprimirTabela(titulos, lista);
 			List<InputUsuario> listInputs = new ArrayList<>();
 			listInputs.add(new InputUsuarioNumeroInterio("Digite a matricula do aluno: ", new ValidadorMatricula()));
 			Object[] array = tu.formulario("ALTERAR ALUNO", listInputs);
 			int matricula = (int) array[0];
-			List<String[]> aluno = this.alunoController.consultarAluno(matricula);
+			List<String[]> aluno = this.fachada.pesquisarAluno(matricula);
 			if (aluno != null) {
 				String[] dadosAluno = aluno.get(0);
 				String mensagem = String.format("%s%nMatricula: %s%nNome: %s%nData Nascimento: %s%n", 
@@ -38,7 +39,7 @@ public class TerminalAlterarAlunoView {
 				list.add(new InputUsuarioString("Digite o nome do aluno: ", new ValidadorNome()));
 				list.add(new InputUsuarioString("Digite a data nascimento(dd/mm/yyyy): ", new ValidadorDataNascimento()));
 				Object[] novosDadosAluno = tu.formulario("ALTERAR ALUNO", list);
-				boolean result = this.alunoController.alterarAluno(matricula, novosDadosAluno);
+				boolean result = this.fachada.atualizarAluno(matricula, novosDadosAluno);
 				if (result == true) {
 					tu.exibirMensagem("Aluno alterado com sucesso!");
 				} else {

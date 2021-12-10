@@ -7,17 +7,21 @@ import java.util.List;
 
 import main.java.com.controller.AlunoController;
 import main.java.com.exceptions.SistemaEscolarException;
+import main.java.com.facade.FacadeConcrete;
+import main.java.com.facade.FacadeOfSystem;
 import main.java.com.util.ValidadorDataNascimento;
 import main.java.com.util.ValidadorMatricula;
 import main.java.com.util.ValidadorNome;
 
 public class TerminalConsultaAlunoView {
 
-	private AlunoController alunoController;
+	// private AlunoController alunoController;
+	private FacadeOfSystem fachada;
 
 	public TerminalConsultaAlunoView() {
 		super();
-		this.alunoController = new AlunoController();
+		// this.alunoController = new AlunoController();
+		this.fachada = FacadeConcrete.getFacade();
 	}
 
 	public void consultarAluno() {
@@ -55,7 +59,8 @@ public class TerminalConsultaAlunoView {
 		list.add(new InputUsuarioNumeroInterio("Digite a matricula do aluno: ", new ValidadorMatricula()));
 		Object[] array = tu.formulario("CONSULTAR ALUNO", list);
 		int matricula = (int) array[0];
-		return this.alunoController.consultarAluno(matricula);
+		// return this.alunoController.consultarAluno(matricula);
+		return this.fachada.pesquisarAluno(matricula);
 	}
 
 	public List<String[]> consultarPorNome(TerminalUsuario tu) throws SistemaEscolarException {
@@ -63,7 +68,8 @@ public class TerminalConsultaAlunoView {
 		list.add(new InputUsuarioString("Digite o nome do aluno: ", new ValidadorNome()));
 		Object[] array = tu.formulario("CONSULTAR ALUNO", list);
 		String nome = (String) array[0];
-		return this.alunoController.consultarAluno(nome);
+		// return this.alunoController.consultarAluno(nome);
+		return this.fachada.pesquisarAluno(nome);
 	}
 
 	public List<String[]> consultarPorDataNascimento(TerminalUsuario tu) throws SistemaEscolarException {
@@ -72,6 +78,7 @@ public class TerminalConsultaAlunoView {
 		Object[] array = tu.formulario("CONSULTAR ALUNO", list);
 		String dataNascimentoStr = (String) array[0];
 		LocalDate dataNascimento = LocalDate.parse(dataNascimentoStr, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-		return this.alunoController.consultarAluno(dataNascimento);
+		// return this.alunoController.consultarAluno(dataNascimento);
+		return this.fachada.pesquisarAluno(dataNascimento);
 	}
 }

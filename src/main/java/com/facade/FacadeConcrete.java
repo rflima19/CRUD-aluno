@@ -1,6 +1,10 @@
 package main.java.com.facade;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import main.java.com.controller.AlunoController;
+import main.java.com.controller.AppController;
 import main.java.com.controller.ProfessorController;
 import main.java.com.exceptions.SistemaEscolarException;
 
@@ -11,11 +15,13 @@ public class FacadeConcrete implements FacadeOfSystem {
 
 	private static FacadeConcrete facade = null;
 	
-	private AlunoController alunocontroller;
+	private AppController appController;
+	private AlunoController alunoController;
 	private ProfessorController professorController;
 	
 	private FacadeConcrete() {
-		this.alunocontroller = new AlunoController();
+		this.appController = new AppController();
+		this.alunoController = new AlunoController();
 		this.professorController = new ProfessorController();
 	}
 	
@@ -28,31 +34,42 @@ public class FacadeConcrete implements FacadeOfSystem {
 	
 	@Override
 	public boolean salvarAluno(int matricula, String nome, String dataNascimento) throws SistemaEscolarException {
-		return this.alunocontroller.salvarAluno(matricula, nome, dataNascimento);
+		return this.alunoController.salvarAluno(matricula, nome, dataNascimento);
 	}
 
 	@Override
-	public void deletarAluno() {
-		// TODO Auto-generated method stub
-		
+	public boolean deletarAluno(int matricula) throws SistemaEscolarException {
+		return this.alunoController.excluirAluno(matricula);
 	}
 
 	@Override
-	public void atualizarAluno() {
-		// TODO Auto-generated method stub
-		
+	public boolean atualizarAluno(int matricula, Object[] dados) throws SistemaEscolarException {
+		return this.alunoController.alterarAluno(matricula, dados);
 	}
 
 	@Override
-	public void listarAluno() {
-		// TODO Auto-generated method stub
-		
+	public List<String[]> listarAlunos() throws SistemaEscolarException {
+		return this.alunoController.listarAlunos();
 	}
 
 	@Override
-	public void pesquisarAluno() {
-		// TODO Auto-generated method stub
-		
+	public List<String[]> pesquisarAluno(int matricula) throws SistemaEscolarException {
+		return this.alunoController.consultarAluno(matricula);
+	}
+
+	@Override
+	public List<String[]> pesquisarAluno(String nome) throws SistemaEscolarException {
+		return this.alunoController.consultarAluno(nome);
+	}
+
+	@Override
+	public List<String[]> pesquisarAluno(LocalDate dataNascimento) throws SistemaEscolarException {
+		return this.alunoController.consultarAluno(dataNascimento);
+	}
+
+	@Override
+	public List<String[]> ordenarAlunos(int opcaoOrdenacao) throws SistemaEscolarException {
+		return this.alunoController.ordenarAluno(opcaoOrdenacao);
 	}
 
 	@Override
@@ -74,7 +91,7 @@ public class FacadeConcrete implements FacadeOfSystem {
 	}
 
 	@Override
-	public void listarProfessor() {
+	public void listarProfessores() {
 		// TODO Auto-generated method stub
 		
 	}
@@ -84,5 +101,9 @@ public class FacadeConcrete implements FacadeOfSystem {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
+	@Override
+	public void switchOpcao(int opcao) {
+		this.appController.switchOpcao(opcao);
+	}
 }

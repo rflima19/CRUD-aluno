@@ -63,7 +63,7 @@ public class AlunoController {
 		return this.converterLista(alunos);
 	}
 
-	public List<String[]> obterAlunos() throws SistemaEscolarException {
+	public List<String[]> listarAlunos() throws SistemaEscolarException {
 		List<Aluno> arrayAluno = Aluno.obterAlunos();
 		if ((arrayAluno == null) || (arrayAluno.isEmpty() == true)) {
 			throw new SistemaEscolarException("Base de dados vazia!",
