@@ -40,7 +40,7 @@ public class TerminalUsuario {
 		return opcao;
 	}
 	
-	public Object[] formulario(String titulo, List<InputUsuario> inputs) {
+	public Object[] formulario(String titulo, List<? extends InputUsuario<?>> inputs) {
 		if (titulo == null) {
 			throw new IllegalArgumentException("argumento string nulo");
 		}
@@ -56,7 +56,7 @@ public class TerminalUsuario {
 		Object[] arrayInputs = new Object[inputs.size()];
 		Object obj = null;
 		int cont = 0;
-		for (InputUsuario input : inputs) {
+		for (InputUsuario<?> input : inputs) {
 			while (true) {
 				try {
 					obj = input.lerDado();

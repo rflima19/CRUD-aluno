@@ -52,7 +52,7 @@ public class TerminalConsultaAlunoView {
 	}
 
 	public List<String[]> consultarPorMatricula(TerminalUsuario tu) throws SistemaEscolarException {
-		List<InputUsuario> list = new ArrayList<>();
+		List<InputUsuario<Integer>> list = new ArrayList<>();
 		list.add(new InputUsuarioNumeroInterio("Digite a matricula do aluno: ", new ValidadorMatricula()));
 		Object[] array = tu.formulario("CONSULTAR ALUNO", list);
 		int matricula = (int) array[0];
@@ -60,7 +60,7 @@ public class TerminalConsultaAlunoView {
 	}
 
 	public List<String[]> consultarPorNome(TerminalUsuario tu) throws SistemaEscolarException {
-		List<InputUsuario> list = new ArrayList<>();
+		List<InputUsuario<String>> list = new ArrayList<>();
 		list.add(new InputUsuarioString("Digite o nome do aluno: ", new ValidadorNome()));
 		Object[] array = tu.formulario("CONSULTAR ALUNO", list);
 		String nome = (String) array[0];
@@ -68,7 +68,7 @@ public class TerminalConsultaAlunoView {
 	}
 
 	public List<String[]> consultarPorDataNascimento(TerminalUsuario tu) throws SistemaEscolarException {
-		List<InputUsuario> list = new ArrayList<>();
+		List<InputUsuario<String>> list = new ArrayList<>();
 		list.add(new InputUsuarioString("Digite a data nascimento(dd/mm/yyyy): ", new ValidadorDataNascimento()));
 		Object[] array = tu.formulario("CONSULTAR ALUNO", list);
 		String dataNascimentoStr = (String) array[0];

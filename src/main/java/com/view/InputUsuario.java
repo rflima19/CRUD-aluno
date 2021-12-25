@@ -1,6 +1,6 @@
 package main.java.com.view;
 
-public abstract class InputUsuario {
+public abstract class InputUsuario<T> {
 
 	protected String titulo;
 	protected String mensagemErro;
@@ -21,5 +21,5 @@ public abstract class InputUsuario {
 		return mensagemErro;
 	}
 	
-	public abstract Object lerDado();
+	public abstract T lerDado();
 }

@@ -1,8 +1,6 @@
 package main.java.com.util;
 
-import main.java.com.view.ValidadorInteiro;
-
-public class ValidadorMatricula implements ValidadorInteiro {
+public class ValidadorMatricula implements Validador<Integer> {
 
 	@Override
 	public boolean test(Integer num) {

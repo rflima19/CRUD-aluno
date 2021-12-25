@@ -23,7 +23,7 @@ public class TerminalExcluirAlunoView {
 			List<String[]> lista = this.fachada.listarAlunos();
 			String[] titulos = new String[] { "MATRICULA", "NOME", "DATA NASCIMENTO" };
 			tu.imprimirTabela(titulos, lista);
-			List<InputUsuario> listInputs = new ArrayList<>();
+			List<InputUsuario<Integer>> listInputs = new ArrayList<>();
 			listInputs.add(new InputUsuarioNumeroInterio("Digite a matricula do aluno: ", new ValidadorMatricula()));
 			Object[] array = tu.formulario("EXCLUIR ALUNO", listInputs);
 			int matricula = (int) array[0];

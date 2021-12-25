@@ -6,9 +6,7 @@ import java.time.format.DateTimeParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import main.java.com.view.ValidadorString;
-
-public class ValidadorDataNascimento implements ValidadorString {
+public class ValidadorDataNascimento implements Validador<String> {
 
 	@Override
 	public boolean test(String str) {

@@ -25,7 +25,7 @@ public class TerminalAlterarAlunoView {
 			List<String[]> lista = this.fachada.listarAlunos();
 			String[] titulos = new String[] { "MATRICULA", "NOME", "DATA NASCIMENTO" };
 			tu.imprimirTabela(titulos, lista);
-			List<InputUsuario> listInputs = new ArrayList<>();
+			List<InputUsuario<Integer>> listInputs = new ArrayList<>();
 			listInputs.add(new InputUsuarioNumeroInterio("Digite a matricula do aluno: ", new ValidadorMatricula()));
 			Object[] array = tu.formulario("ALTERAR ALUNO", listInputs);
 			int matricula = (int) array[0];
@@ -35,7 +35,7 @@ public class TerminalAlterarAlunoView {
 				String mensagem = String.format("%s%nMatricula: %s%nNome: %s%nData Nascimento: %s%n", 
 						"Aluno selecionado:", dadosAluno[0], dadosAluno[1], dadosAluno[2]);
 				tu.exibirMensagem(mensagem);
-				List<InputUsuario> list = new ArrayList<>();
+				List<InputUsuario<String>> list = new ArrayList<>();
 				list.add(new InputUsuarioString("Digite o nome do aluno: ", new ValidadorNome()));
 				list.add(new InputUsuarioString("Digite a data nascimento(dd/mm/yyyy): ", new ValidadorDataNascimento()));
 				Object[] novosDadosAluno = tu.formulario("ALTERAR ALUNO", list);

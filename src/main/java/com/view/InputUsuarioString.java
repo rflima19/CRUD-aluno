@@ -1,13 +1,14 @@
 package main.java.com.view;
 
 import main.java.com.util.Console;
+import main.java.com.util.Validador;
 
-public class InputUsuarioString extends InputUsuario {
+public class InputUsuarioString extends InputUsuario<String> {
 
 	private String texto;
-	private ValidadorString validador;
+	private Validador<String> validador;
 		
-	public InputUsuarioString(String titulo, ValidadorString validador) {
+	public InputUsuarioString(String titulo, Validador<String> validador) {
 		super(titulo);
 		if (validador == null) {
 			throw new IllegalArgumentException("Argumento validador nulo");
@@ -19,12 +20,12 @@ public class InputUsuarioString extends InputUsuario {
 		return texto;
 	}
 	
-	public ValidadorString getValidador() {
+	public Validador<String> getValidador() {
 		return validador;
 	}
 
 	@Override
-	public Object lerDado() {
+	public String lerDado() {
 		System.out.println(this.titulo);
 		System.out.print(">>");
 		this.texto = Console.readString();

@@ -21,7 +21,7 @@ public class TerminalCadastroAlunoView {
 
 	public void salvarAluno() {
 		TerminalUsuario tu = new TerminalUsuario();
-		List<InputUsuario> list = new ArrayList<>();
+		List<InputUsuario<?>> list = new ArrayList<>();
 		list.add(new InputUsuarioNumeroInterio("Digite a matricula do aluno: ", new ValidadorMatricula()));
 		list.add(new InputUsuarioString("Digite o nome do aluno: ", new ValidadorNome()));
 		list.add(new InputUsuarioString("Digite a data nascimento(dd/mm/yyyy): ", new ValidadorDataNascimento()));
