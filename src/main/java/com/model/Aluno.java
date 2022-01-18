@@ -7,6 +7,7 @@ import java.util.Objects;
 
 import main.java.com.DAO.AlunoDAO;
 import main.java.com.DAO.AlunoFileBinarioDAO;
+import main.java.com.DAO.AlunoFileTextoDAO;
 import main.java.com.exceptions.MatriculaInvalidaException;
 import main.java.com.exceptions.NomeInvalidoException;
 import main.java.com.exceptions.SistemaEscolarException;
@@ -14,6 +15,7 @@ import main.java.com.exceptions.SistemaEscolarException;
 public class Aluno implements Comparable<Aluno> {
 	
 	private static AlunoDAO alunoDAO = new AlunoFileBinarioDAO();
+	//private static AlunoDAO alunoDAO = new AlunoFileTextoDAO();
 
 	private int matricula;
 	private String nome;
