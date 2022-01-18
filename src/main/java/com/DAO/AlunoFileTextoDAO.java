@@ -37,7 +37,15 @@ public class AlunoFileTextoDAO implements AlunoDAO {
 	}
 
 	public synchronized boolean salvar(Aluno aluno) throws SistemaEscolarException {
-		try (Writer writer = Files.newBufferedWriter(AlunoFileTextoDAO.FILE, StandardOpenOption.CREATE,
+		if (Files.exists(AlunoFileTextoDAO.DIRECTORY) == false) {
+			try {
+				Files.createDirectory(AlunoFileTextoDAO.DIRECTORY);
+			} catch (IOException e) {
+				throw new SistemaEscolarException(
+						"Falha ao criar diretório", e);
+			}
+		}
+		try (Writer writer = Files.newBufferedWriter(AlunoFileTextoDAO.FILE, Charset.defaultCharset(), StandardOpenOption.CREATE,
 				StandardOpenOption.WRITE, StandardOpenOption.APPEND); PrintWriter pw = new PrintWriter(writer)) {
 			String line = this.converterAluno(aluno);
 			pw.println(line);

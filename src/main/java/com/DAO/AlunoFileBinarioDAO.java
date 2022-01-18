@@ -39,6 +39,14 @@ public class AlunoFileBinarioDAO implements AlunoDAO {
 	 * Cada registro salvo de aluno consome 124 bytes do arquivo
 	 */
 	public synchronized boolean salvar(Aluno aluno) throws SistemaEscolarException {
+		if (Files.exists(AlunoFileBinarioDAO.DIRECTORY) == false) {
+			try {
+				Files.createDirectory(AlunoFileBinarioDAO.DIRECTORY);
+			} catch (IOException e) {
+				throw new SistemaEscolarException(
+						"Falha ao criar diretório", e);
+			}
+		}
 		try (OutputStream outBytes = Files.newOutputStream(AlunoFileBinarioDAO.FILE, StandardOpenOption.CREATE,
 				StandardOpenOption.WRITE, StandardOpenOption.APPEND);
 				DataOutputStream outData = new DataOutputStream(outBytes)) {
